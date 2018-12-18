@@ -1,0 +1,9 @@
+{% extends 'Layout.twig' %}
+{% block content %}
+	<form method="POST" action="/products/save">
+		<input type="hidden" name="id" value="{{ id | e }}">		
+		<input type="text" name="name" value="{{ name | e }}">
+		<input type="text" name="UUID" value="{{ UUID | e }}">
+		<button type="submit">Submit</button>
+	</form>
+{% endblock %}

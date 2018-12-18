@@ -1,0 +1,8 @@
+{% extends 'Layout.twig' %}
+{% block content %}
+	<form method="POST" action="/LocationTypes/save">
+		<input type="hidden" name="id" value="{{ id | e }}">		
+		<input type="text" name="name" value="{{ name | e }}">
+		<button type="submit">Submit</button>
+	</form>
+{% endblock %}
