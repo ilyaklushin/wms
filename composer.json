@@ -18,6 +18,7 @@
     "require": {
         "php": ">=7.0.0",
         "colshrapnel/safemysql": "1.0.0",
-        "twig/twig" : "~2.0"
+        "twig/twig" : "~2.0",
+        "endroid/qr-code": "^3.5"
     }
 }

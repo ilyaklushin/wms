@@ -47,16 +47,16 @@ body {
 }
 
 #search {
-	width: 70%;
+	max-width: 53em;
 	border: 1px solid #dfe1e5;
 	border-radius: 1em;
 	padding: 0.5em;
 	padding-left: 1em;
 	margin: auto;
+	display: flex;
 }
 
 #search > input {
-	width: 100%;
 	border: 0;
 }
 
@@ -123,16 +123,25 @@ body {
 	background-color: red;
 }
 
+.table .printButton {
+	max-width: 0.5em;
+}
+
+.table .printButton:hover {
+	color: white;
+	background-color: blue;
+}
+
 #addButton {
 	color: white;
 	position: fixed;
-    background-color: #4CAF50;
-    bottom: 1em;
-    right: 1em;
-    border-radius: 50%;
-    width: 3.5em;
-    height: 3.5em;
-    display: flex;
+	background-color: #4CAF50;
+	bottom: 1em;
+	right: 1em;
+	border-radius: 50%;
+	width: 3.5em;
+	height: 3.5em;
+	display: flex;
 	justify-content: space-around;
 	align-items: center;
 	box-shadow: 0 1px 10px 0 rgba(32,33,36,0.28);
@@ -155,4 +164,81 @@ body {
 	padding: 1em;
 	font-size: larger;
 	text-align: center;
+}
+
+.form {
+	max-width: 30em;
+	margin: auto;
+}
+
+form {
+	padding: 1em;
+}
+
+form input {
+	margin-bottom: 2em;
+}
+
+form select {
+	margin-bottom: 2em;
+}
+
+#navigation {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	flex-flow: row wrap;
+	max-width: 55em;
+	margin: auto;
+	padding-top: 1.5em;
+}
+
+.navigation_block {
+	display: block;
+	flex-grow: 1;
+	width: 12em;
+	text-align: center;
+	padding: 2.7em;
+	background-color: #0f9d58;
+	color: white;
+	margin: 0.3em;
+	border-radius: 0.5em;
+	box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+}
+
+.navigation_block:hover {
+	cursor: pointer;
+	background-color: #ccc0;
+	color: #545454;
+}
+
+input, label {
+	vertical-align:middle;
+}
+
+.qrcode-text {
+	padding-right:0.5em;
+	margin-right:0;
+	width: 100%;
+}
+
+.qrcode-text-btn {
+	display:inline-block;
+	background:url(/qr_icon.svg) 50% 50% no-repeat;
+	width:1.7em;
+	cursor:pointer;
+}
+
+.qrcode-text-btn > input[type=file] {
+	position:absolute;
+	overflow:hidden; 
+	width:1px; 
+	height:1px; 
+	opacity:0;
+}
+
+.qrcode-go-btn {
+	margin-left:0.5em;
+	cursor:pointer;
+	display: flex;
 }

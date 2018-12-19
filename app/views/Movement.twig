@@ -1,20 +1,48 @@
 {% extends 'Layout.twig' %}
 {% block content %}
-	<form method="POST" action="/Locations/save">
-		<input type="text" name="id" value="{{ id | e }}">		
-		<input type="text" name="name" value="{{ name | e }}">
-		
-		<input type="hidden" name="id" value="{{ UUID | e }}">
-		<select name="idLocationType">
-		{% for type in types %}
-			<option selected value="{{ type.id }}">{{ type.name }}</option>
-		{% endfor %}
-		</select>
-		<select name="idParent">
-		{% for location in locations %}
-			<option selected value="{{ location.id }}">{{ location.path }}</option>
-		{% endfor %}
-		</select>
-		<button type="submit">Submit</button>
-	</form>
+	<div class="form">
+		<form method="POST" action="/Movements/save">
+			<div class="label">Номер: 	
+				<input type="text" name="id" value="{{ id | e }}" disabled="">
+			</div>
+
+			<div class="label">Дата: 	
+				<input type="date" name="date" value="{{ date | e }}">
+			</div>
+			
+			<div class="label">Товар: 	
+			<select name="idProduct">
+			{% for product in products %}
+				<option selected value="{{ product.id }}">{{ product.name }}</option>
+			{% endfor %}
+			</select>
+			</div>
+
+			<div class="label">Откуда: 	
+			<select name="idLocationFrom">
+			{% for location in locations %}
+				<option selected value="{{ location.id }}">{{ location.path }}</option>
+			{% endfor %}
+			</select>
+			</div>
+
+			<div class="label">Куда: 	
+			<select name="idLocationTo">
+			{% for location in locations %}
+				<option selected value="{{ location.id }}">{{ location.path }}</option>
+			{% endfor %}
+			</select>
+			</div>
+
+			<div class="label">Количество: 	
+				<input type="text" name="quantity" value="{{ quantity | e }}">
+			</div>
+			
+			
+			<div class="button_container">
+				<button type="submit">Сохранить</button>
+				<button type="reset" onclick="location.href='/Movements'">Отменить</button>
+			</div>
+		</form>
+	</div>
 {% endblock %}

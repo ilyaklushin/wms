@@ -12,9 +12,9 @@ class MovementModel
 	private $table;
 	
 
-	function __construct($id, $name, $table) {
+	function __construct($id, $date, $table) {
 		$this->id = $id;
-		$this->name = $name;
+		$this->date = $date;
 		$this->table = $table;
 	}
 
@@ -44,22 +44,24 @@ class MovementModel
 
 	public function getData() {
 		$data = array();
-		$data['fieldsNames'] = array('Номер','Дата');
-		$data['fieldsData'] = array(
-			'id' => $this->id,
-			'date' => $this->date,
-		);
-		$data['table'] = $this->table->getData();
+		// $data['fieldsNames'] = array('Номер','Дата');
+		// $data['fieldsData'] = array(
+		// 	'id' => $this->id,
+		// 	'date' => $this->date,
+		// );
+		//$data['table'] = $this->table->getData();
+		$data['id'] = $this->id;
+		$data['date'] = $this->date;
 		return $data;
 	}
 
 	public function save() {
-		if (empty($this->id)) {
-			$id = App::$base->insertMovement($this);
-		 	$this->id = $id;
-		} else {
-			App::$base->updateMovement($this);
-		}
+		// if (empty($this->id)) {
+		// 	$id = App::$base->insertMovement($this);
+		//  	$this->id = $id;
+		// } else {
+		// 	App::$base->updateMovement($this);
+		// }
 	}
 
 	public static function delete($arr) {

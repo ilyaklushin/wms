@@ -13,6 +13,7 @@ class User
 		self::$ip = $_SERVER['REMOTE_ADDR'];
 		self::$routingTable = [
 			'/'						=> 'DashBoard::show',
+			'/qr/show'				=> 'QR::show',
 
 			'/products/edit'		=> 'Products::showOne',
 			'/products/delete'		=> 'Products::delete',

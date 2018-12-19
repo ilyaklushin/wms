@@ -11,7 +11,8 @@ class ProductsController extends Controller
 {
 	public function showAll() {
 		$data = ProductModel::getAll();
-		$this->render('List', $data);
+		// var_dump($data);
+		$this->render('Products', $data);
 	}
 
 	public function showOne($id = 0) {

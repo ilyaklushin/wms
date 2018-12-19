@@ -1,0 +1,27 @@
+{% extends 'Layout.twig' %}
+{% block content %}
+<table class="table">
+	<thead>
+		<tr>
+			{% for col in cols %}
+			<th>{{ col|e }}</th>
+			{% endfor %}
+			<th colspan="2"></th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for row in rows %}
+		<tr id="row{{row.id | e}}">
+			{% for cell in row %}
+				<td onclick="edit({{row.id | e}})">{{ cell|e }}</td>
+			{% endfor %}
+			<td class="deleteButton" onclick="del({{row.id | e}})">X</td>
+			<td class="printButton" onclick="printQR('{{row.UUID | e}}')">
+			<i class="material-icons">print</i>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<div id="addButton" onclick="edit()"><i class="material-icons">add</i></div>
+{% endblock %}

@@ -3,6 +3,7 @@ namespace app\controllers;
 use app\core\App;
 use app\core\Controller;
 use app\models\MovementModel;
+use app\models\LocationModel;
 
 /**
  * 
@@ -21,8 +22,9 @@ class MovementsController extends Controller
 			$Movement = App::$base->getMovement($id);
 			$data = $Movement->getData();
 		}
-		print_r($data);
-		//$this->render('Movement', $data);
+		$data['locations'] = LocationModel::getLocationsList();
+		$data['products'] = App::$base->getRows('products');
+		$this->render('Movement', $data);
 	}
 
 	public function save($id, $name, $table) {

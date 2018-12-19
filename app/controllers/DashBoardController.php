@@ -11,6 +11,7 @@ class DashBoardController extends Controller
 	public function show()
 	{
 		$data = array();
+		$data['title'] = "Главная страница";
 		$this->render('DashBoard', $data);
 	}
 

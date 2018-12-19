@@ -95,13 +95,11 @@ class MySQLModel
 
 	public function getMovement($id) {
 		$table = new MovementTable();
-		$Movement = new Movement();
 		$query = "
-			SELECT u.id, u.name, d.name AS d_name
-			FROM movementstable t
-			INNER JOIN movements m ON m.idMovement = t.id
+			SELECT * FROM `movements` WHERE id=?i
 		";
 		$data = $this->db->getRow($query, $id);
+		$Movement = new Movement($data['id'], $data['date'], "");
 		return $Movement;
 	}
 

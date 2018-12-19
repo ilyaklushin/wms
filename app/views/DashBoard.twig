@@ -1,4 +1,15 @@
 {% extends 'Layout.twig' %}
 {% block content %}
-	{{message | raw}}
+	<div id="search">
+		<input type=text size=16 placeholder="Идентификатор" class=qrcode-text id="searchInput">
+		<label class=qrcode-text-btn><input type=file accept="image/*" capture=environment onchange="openQRCamera(this);" tabindex=-1></label>
+		<div class="qrcode-go-btn" disabled onclick="saerch()"><i class="material-icons">search</i></div>
+	</div>
+	<div id="navigation">
+		<div class="navigation_block" onclick="location.href='/Products'">Товары</div>
+		<div class="navigation_block" onclick="location.href='/Units'">Единицы измерения</div>
+		<div class="navigation_block" onclick="location.href='/Locations'">Места хранения</div>
+		<div class="navigation_block" onclick="location.href='/LocationTypes'">Типы мест хранения</div>
+		<div class="navigation_block" onclick="location.href='/Movements'">Перемещения</div>
+	</div>
 {% endblock %}
