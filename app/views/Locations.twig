@@ -1,6 +1,0 @@
-{% extends 'Layout.twig' %}
-{% block content %}
-	{% import "tree.twig" as tree %}
-	{{ tree.list(items, 1) }}
-	<div id="addButton" onclick="edit()"><i class="material-icons">add</i></div>
-{% endblock %}
