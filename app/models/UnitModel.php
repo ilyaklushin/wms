@@ -1,9 +1,9 @@
-<?php 
+<?php
 namespace app\models;
 use app\core\App;
 
 /**
- * 
+ *
  */
 class UnitModel
 {
@@ -48,7 +48,7 @@ class UnitModel
 	}
 
 	public static function delete($arr) {
-		$result = App::$base->delete("Units", (array) $arr);
+		$result = App::$base->delete("units", (array) $arr);
 		return $result;
 	}
 

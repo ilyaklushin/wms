@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace app\models;
 use app\models\ProductModel as Product;
 use app\models\UnitModel as Unit;
@@ -15,10 +15,7 @@ class MySQLModel
 
 	public function __construct()
 	{
-		$user = 'root';
-		$pass = '';
-		$base = 'wms';
-		$this->db = new \SafeMysql(array('user'=>$user, 'pass'=>$pass, 'db'=>$base, 'charset'=>'utf8'));
+		$this->db = new \SafeMysql(array('user'=>db_auth::USER, 'pass'=>db_auth::PASS, 'db'=>db_auth::BASE, 'charset'=>'utf8'));
 	}
 
 	public function getCols($name) {
@@ -49,17 +46,17 @@ class MySQLModel
 
 
 	public function getUnit($id) {
-		$data = $this->db->getRow("SELECT * FROM `Units` WHERE id=?i", $id);
+		$data = $this->db->getRow("SELECT * FROM units WHERE id=?i", $id);
 		return new Unit($data['id'], $data['name']);
 	}
 
 	public function insertUnit($Unit) {
-		$this->db->query("INSERT INTO `Units`(`name`) VALUES (?s)", $Unit->getName());
+		$this->db->query("INSERT INTO units(`name`) VALUES (?s)", $Unit->getName());
 		return $this->db->insertId();
 	}
 
 	public function updateUnit($Unit) {
-		return $this->db->query("UPDATE `Units` SET `name`=?s WHERE `id`=?i", $Unit->getName(), $Unit->getId());	
+		return $this->db->query("UPDATE units SET `name`=?s WHERE `id`=?i", $Unit->getName(), $Unit->getId());
 	}
 
 
@@ -69,34 +66,34 @@ class MySQLModel
 	}
 
 	public function insertProduct($Product) {
-		$this->db->query("INSERT INTO `products`(`UUID`, `name`) VALUES (?s, ?s)", $Product->getUUID(), $Product->getName());
+		$this->db->query("INSERT INTO products(`UUID`, `name`) VALUES (?s, ?s)", $Product->getUUID(), $Product->getName());
 		return $this->db->insertId();
 	}
 
 	public function updateProduct($Product) {
-		return $this->db->query("UPDATE `products` SET `UUID`=?s,`name`=?s WHERE `id`=?i", $Product->getUUID(), $Product->getName(), $Product->getId());	
+		return $this->db->query("UPDATE products SET `UUID`=?s,`name`=?s WHERE `id`=?i", $Product->getUUID(), $Product->getName(), $Product->getId());
 	}
 
 
 	public function getLocationType($id) {
-		$data = $this->db->getRow("SELECT * FROM `location_types` WHERE id=?i", $id);
+		$data = $this->db->getRow("SELECT * FROM location_types WHERE id=?i", $id);
 		return new LocationType($data['id'], $data['name']);
 	}
 
 	public function insertLocationType($LocationType) {
-		$this->db->query("INSERT INTO `location_types`(`name`) VALUES (?s)", $LocationType->getName());
+		$this->db->query("INSERT INTO location_types(`name`) VALUES (?s)", $LocationType->getName());
 		return $this->db->insertId();
 	}
 
 	public function updateLocationType($LocationType) {
-		return $this->db->query("UPDATE `location_types` SET `name`=?s WHERE `id`=?i", $LocationType->getName(), $LocationType->getId());	
+		return $this->db->query("UPDATE location_types SET `name`=?s WHERE `id`=?i", $LocationType->getName(), $LocationType->getId());
 	}
 
 
 	public function getMovement($id) {
 		$table = new MovementTable();
 		$query = "
-			SELECT * FROM `movements` WHERE id=?i
+			SELECT * FROM movements WHERE id=?i
 		";
 		$data = $this->db->getRow($query, $id);
 		$Movement = new Movement($data['id'], $data['date'], "");
@@ -114,16 +111,16 @@ class MySQLModel
 	public function insertUpdateLocation($Location)
 	{
 		$this->db->query("
-			INSERT INTO `locations` (`id`, `name`, `idLocationType`, `UUID`) VALUES (?i, ?s, ?i, ?s)
+			INSERT INTO locations (`id`, `name`, `idLocationType`, `UUID`) VALUES (?i, ?s, ?i, ?s)
 			ON DUPLICATE KEY UPDATE `name`=VALUES(`name`), `idLocationType`=VALUES(`idLocationType`), `UUID`=VALUES(`UUID`);
 		", $Location->getId(), $Location->getName(), $Location->getTypeId(), $Location->getUUID());
-		
+
 		$lastId = $this->db->insertId();
-		
+
 		$this->db->query("
-			INSERT INTO locations_tree (idAncestor, idDescendant, idNearestAncestor, level) 
-			SELECT idAncestor, ?i, ?i, level + 1 
-			FROM locations_tree 
+			INSERT INTO locations_tree (idAncestor, idDescendant, idNearestAncestor, level)
+			SELECT idAncestor, ?i, ?i, level + 1
+			FROM locations_tree
 			WHERE idDescendant = ?i
 			UNION ALL SELECT ?i, ?i, ?i, 0
 			ON DUPLICATE KEY UPDATE `idAncestor`=VALUES(`idAncestor`), `idDescendant`=VALUES(`idDescendant`), `idNearestAncestor`=VALUES(`idNearestAncestor`), `level`=VALUES(`level`);
@@ -135,13 +132,13 @@ class MySQLModel
 		$data = $this->db->getAll("
 			SELECT location.id, tree.idNearestAncestor AS pid, CONCAT(type.name, ' \"', location.name, '\"') AS name
 			FROM locations AS location
-			INNER JOIN location_types AS type 
+			INNER JOIN location_types AS type
 			ON (location.idLocationType = type.id)
-			INNER JOIN locations_tree AS tree 
+			INNER JOIN locations_tree AS tree
 			ON (location.id = tree.idDescendant)
 			WHERE tree.idAncestor = 1
 		");
-		return $data;	
+		return $data;
 	}
 
 	public function getLocationPath($id)
@@ -149,7 +146,7 @@ class MySQLModel
 		$data = $this->db->getCol("
 			SELECT CONCAT(type.name, ' ', location.name) AS String
 			FROM locations AS location
-			INNER JOIN location_types AS type 
+			INNER JOIN location_types AS type
 			ON (location.idLocationType=type.id)
 			JOIN locations_tree AS tree
 			ON (location.id = tree.idAncestor)
